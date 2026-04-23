@@ -1,261 +1,1164 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GioDoces — Bolos de pote e brownies artesanais</title>
-  <meta name="description" content="GioDoces - Bolos de pote e brownies artesanais em Pouso Alegre, MG. Peça pelo iFood ou WhatsApp." />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-            serif: ['Fraunces', 'serif'],
-          },
-          colors: {
-            background: '#fbf6ef',
-            foreground: '#3a2418',
-            primary: { DEFAULT: '#8b3a1f', foreground: '#fbf6ef' },
-            secondary: { DEFAULT: '#e6b88a', foreground: '#3a2418' },
-            accent: { DEFAULT: '#f3e3cf', foreground: '#3a2418' },
-            muted: { DEFAULT: '#f3e3cf', foreground: '#7a5b48' },
-            border: '#e6d5c0',
-          },
-        },
-      },
-    };
-  </script>
-  <style>
-    body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background:#fbf6ef; color:#3a2418; }
-    .font-serif { font-family: 'Fraunces', serif; }
-    .container { max-width: 1200px; }
-    /* card hover */
-    .menu-card { transition: all .3s ease; }
-    .menu-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -10px rgba(58,36,24,.18); }
-    .menu-card .img-wrap img { transition: transform .5s ease; }
-    .menu-card:hover .img-wrap img { transform: scale(1.05); }
-    .menu-card .add-btn .arrow { opacity:0; transform: translateX(-6px); transition: all .3s ease; }
-    .menu-card:hover .add-btn { background:#8b3a1f; color:#fbf6ef; }
-    .menu-card:hover .add-btn .arrow { opacity:1; transform: translateX(0); }
-    .pulse-dot { animation: pulse 2s ease-in-out infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-    .nav-link:hover { color:#8b3a1f; }
-    .btn { display:inline-flex; align-items:center; justify-content:center; font-weight:600; border-radius:9999px; transition: all .25s ease; cursor:pointer; }
-    .btn-primary { background:#8b3a1f; color:#fbf6ef; box-shadow: 0 10px 25px -8px rgba(139,58,31,.5); }
-    .btn-primary:hover { background:#6e2d17; box-shadow: 0 14px 30px -8px rgba(139,58,31,.6); }
-    .btn-outline { background:transparent; color:#3a2418; border:2px solid #3a2418; }
-    .btn-outline:hover { background:#3a2418; color:#fbf6ef; }
-    .btn-ghost { background:transparent; color:#3a2418; }
-    svg.icon { width:1em; height:1em; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Com Afeto — Ateliê de Personalizados</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream:    #FAF5EE;
+  --warm:     #F2E8D9;
+  --blush:    #EDCFCA;
+  --rose:     #D4897A;
+  --deep:     #A85848;
+  --berry:    #6B3040;
+  --sage:     #7A9E7E;
+  --sage-l:   #C5D9C4;
+  --ink:      #241A1A;
+  --mid:      #7A5C58;
+  --soft:     #B8968E;
+  --white:    #FFFFFF;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  font-family: 'Lato', sans-serif;
+  color: var(--ink);
+  cursor: none;
+  overflow-x: hidden;
+}
+
+/* ── CUSTOM CURSOR ── */
+.cursor {
+  width: 10px; height: 10px;
+  background: var(--rose);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+  mix-blend-mode: multiply;
+}
+.cursor-ring {
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--rose);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.18s ease, width 0.3s, height 0.3s, border-color 0.3s;
+  opacity: 0.6;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  background: rgba(250,245,238,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(212,137,122,0.12);
+  transition: padding 0.3s;
+}
+nav.scrolled { padding: 14px 48px; }
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--berry);
+  text-decoration: none;
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+.nav-logo span { font-style: italic; color: var(--deep); }
+.nav-logo sup {
+  font-family: 'Lato', sans-serif;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--soft);
+  margin-left: 4px;
+  font-style: normal;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--mid);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0; right: 0;
+  height: 1px;
+  background: var(--rose);
+  transform: scaleX(0);
+  transition: transform 0.3s;
+  transform-origin: left;
+}
+.nav-links a:hover { color: var(--deep); }
+.nav-links a:hover::after { transform: scaleX(1); }
+
+.nav-cta {
+  background: var(--berry);
+  color: #fff !important;
+  padding: 10px 22px;
+  border-radius: 50px;
+  letter-spacing: 1px !important;
+  transition: background 0.2s, transform 0.2s !important;
+}
+.nav-cta:hover { background: var(--deep) !important; transform: translateY(-1px); }
+.nav-cta::after { display: none !important; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 120px 48px 80px;
+  position: relative;
+  overflow: hidden;
+  gap: 48px;
+}
+
+/* Texture grain */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero-bg-circle.c1 {
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(237,207,202,0.5) 0%, transparent 65%);
+  top: -200px; right: -200px;
+  animation: pulse 8s ease-in-out infinite;
+}
+.hero-bg-circle.c2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(197,217,196,0.35) 0%, transparent 65%);
+  bottom: -100px; left: 100px;
+  animation: pulse 10s ease-in-out infinite reverse;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.hero-left {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--deep);
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: slideIn 0.7s 0.1s ease forwards;
+}
+.hero-tag::before {
+  content: '';
+  width: 24px; height: 1px;
+  background: var(--rose);
+}
+
+h1.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(48px, 5.5vw, 80px);
+  line-height: 1.08;
+  color: var(--berry);
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: slideIn 0.7s 0.2s ease forwards;
+}
+h1.hero-title em {
+  font-style: italic;
+  color: var(--deep);
+  display: block;
+}
+
+.hero-desc {
+  font-size: 17px;
+  color: var(--mid);
+  line-height: 1.75;
+  max-width: 420px;
+  font-weight: 300;
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: slideIn 0.7s 0.3s ease forwards;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  opacity: 0;
+  animation: slideIn 0.7s 0.4s ease forwards;
+}
+
+.btn-primary {
+  background: var(--berry);
+  color: #fff;
+  padding: 15px 32px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s;
+  box-shadow: 0 8px 24px rgba(107,48,64,0.25);
+}
+.btn-primary:hover {
+  background: var(--deep);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(107,48,64,0.3);
+}
+
+.btn-ghost {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--mid);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s;
+}
+.btn-ghost:hover { color: var(--deep); }
+.btn-ghost::after {
+  content: '→';
+  transition: transform 0.2s;
+}
+.btn-ghost:hover::after { transform: translateX(4px); }
+
+/* HERO RIGHT — product showcase */
+.hero-right {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  animation: slideIn 0.9s 0.3s ease forwards;
+}
+
+.product-showcase {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+}
+
+.showcase-main {
+  background: var(--white);
+  border-radius: 28px;
+  padding: 40px;
+  box-shadow: 0 24px 64px rgba(107,48,64,0.1), 0 4px 12px rgba(107,48,64,0.05);
+  text-align: center;
+  position: relative;
+  border: 1px solid rgba(212,137,122,0.12);
+}
+.showcase-emoji { font-size: 72px; display: block; margin-bottom: 16px; line-height: 1; }
+.showcase-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--berry);
+  margin-bottom: 6px;
+}
+.showcase-sub { font-size: 13px; color: var(--soft); }
+.showcase-price {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--deep);
+  margin-top: 16px;
+}
+
+/* floating mini cards */
+.float-card {
+  position: absolute;
+  background: var(--white);
+  border-radius: 16px;
+  padding: 12px 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(212,137,122,0.15);
+}
+.float-card.fc1 {
+  top: -50px; left: -40px;
+  animation: float1 4s ease-in-out infinite;
+}
+.float-card.fc2 {
+  bottom: -30px; right: -40px;
+  animation: float2 5s ease-in-out infinite;
+}
+@keyframes float1 {
+  0%, 100% { transform: translateY(0px) rotate(-2deg); }
+  50% { transform: translateY(-10px) rotate(-2deg); }
+}
+@keyframes float2 {
+  0%, 100% { transform: translateY(0px) rotate(2deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
+}
+.fc-icon { font-size: 24px; }
+.fc-text { font-size: 11px; }
+.fc-text strong { display: block; font-weight: 700; color: var(--berry); font-size: 12px; }
+.fc-text span { color: var(--soft); }
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── MARQUEE ── */
+.marquee-wrap {
+  background: var(--berry);
+  padding: 16px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-track {
+  display: inline-flex;
+  gap: 0;
+  animation: marquee 22s linear infinite;
+}
+.marquee-track span {
+  font-size: 12px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  padding: 0 32px;
+}
+.marquee-track .dot {
+  color: var(--rose);
+  padding: 0;
+  letter-spacing: 0;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── SECTIONS ── */
+section {
+  padding: 100px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--rose);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.section-eyebrow::before {
+  content: '';
+  width: 20px; height: 1px;
+  background: var(--rose);
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 44px);
+  color: var(--berry);
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+.section-title em { font-style: italic; color: var(--deep); }
+
+.section-desc {
+  font-size: 16px;
+  color: var(--mid);
+  font-weight: 300;
+  line-height: 1.75;
+  max-width: 520px;
+}
+
+/* ── PRODUCTS ── */
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 48px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.product-card {
+  background: var(--white);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(212,137,122,0.1);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s;
+  cursor: none;
+}
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 48px rgba(107,48,64,0.1);
+}
+
+.product-img {
+  background: var(--warm);
+  padding: 32px;
+  text-align: center;
+  font-size: 64px;
+  line-height: 1;
+  position: relative;
+  overflow: hidden;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-img::after {
+  content: '';
+  position: absolute;
+  bottom: -20px; right: -20px;
+  width: 100px; height: 100px;
+  background: radial-gradient(circle, rgba(237,207,202,0.6), transparent);
+  border-radius: 50%;
+}
+.product-card:nth-child(2) .product-img { background: #EEF4EE; }
+.product-card:nth-child(3) .product-img { background: #F5EEEA; }
+.product-card:nth-child(4) .product-img { background: #F0EEF5; }
+
+.product-info { padding: 20px; }
+.product-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  color: var(--berry);
+  margin-bottom: 4px;
+}
+.product-desc-s {
+  font-size: 12px;
+  color: var(--soft);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+.product-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.product-price {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--deep);
+}
+.product-btn {
+  width: 36px; height: 36px;
+  background: var(--berry);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 18px;
+  cursor: none;
+  transition: background 0.2s, transform 0.2s;
+  border: none;
+}
+.product-btn:hover {
+  background: var(--deep);
+  transform: scale(1.1);
+}
+
+/* ── HOW IT WORKS ── */
+.how-section {
+  background: var(--berry);
+  border-radius: 32px;
+  padding: 80px 64px;
+  max-width: 1104px;
+  margin: 0 auto 0;
+  position: relative;
+  overflow: hidden;
+}
+.how-section::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(212,137,122,0.2) 0%, transparent 65%);
+  border-radius: 50%;
+}
+.how-section .section-eyebrow { color: var(--blush); }
+.how-section .section-eyebrow::before { background: var(--rose); }
+.how-section .section-title { color: #fff; }
+.how-section .section-title em { color: var(--rose); }
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  margin-top: 56px;
+  position: relative;
+  z-index: 1;
+}
+.steps-grid::before {
+  content: '';
+  position: absolute;
+  top: 28px; left: 10%; right: 10%;
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+  pointer-events: none;
+}
+
+.step {
+  text-align: center;
+}
+.step-num {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin: 0 auto 20px;
+  position: relative;
+}
+.step-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.step-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
+}
+
+/* ── TESTIMONIALS ── */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.testi-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 28px;
+  border: 1px solid rgba(212,137,122,0.1);
+  position: relative;
+}
+.testi-card::before {
+  content: '"';
+  position: absolute;
+  top: 16px; right: 24px;
+  font-family: 'Playfair Display', serif;
+  font-size: 72px;
+  color: var(--blush);
+  line-height: 1;
+}
+.testi-stars { color: var(--rose); font-size: 14px; margin-bottom: 12px; }
+.testi-text {
+  font-size: 14px;
+  color: var(--mid);
+  line-height: 1.75;
+  margin-bottom: 20px;
+  font-style: italic;
+  position: relative;
+  z-index: 1;
+}
+.testi-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.testi-avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: var(--warm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+.testi-name { font-weight: 700; font-size: 13px; color: var(--berry); }
+.testi-when { font-size: 11px; color: var(--soft); }
+
+/* ── ABOUT ── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.about-visual {
+  position: relative;
+}
+.about-main-card {
+  background: var(--white);
+  border-radius: 28px;
+  padding: 48px;
+  text-align: center;
+  box-shadow: 0 16px 48px rgba(107,48,64,0.08);
+  border: 1px solid rgba(212,137,122,0.1);
+}
+.about-main-card .big-emoji { font-size: 80px; display: block; margin-bottom: 16px; }
+.about-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-style: italic;
+  color: var(--berry);
+  line-height: 1.4;
+}
+.about-stat-card {
+  position: absolute;
+  background: var(--berry);
+  color: #fff;
+  border-radius: 16px;
+  padding: 16px 20px;
+}
+.about-stat-card.s1 { bottom: -20px; left: -30px; }
+.about-stat-card.s2 { top: -20px; right: -30px; }
+.stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--rose);
+  line-height: 1;
+}
+.stat-label { font-size: 11px; color: rgba(255,255,255,0.6); letter-spacing: 1px; }
+
+.about-values { display: flex; flex-direction: column; gap: 20px; margin-top: 32px; }
+.value-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.value-icon {
+  width: 44px; height: 44px; min-width: 44px;
+  background: var(--blush);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+.value-text h4 { font-size: 15px; font-weight: 700; color: var(--berry); margin-bottom: 3px; }
+.value-text p { font-size: 13px; color: var(--mid); line-height: 1.5; }
+
+/* ── CTA FINAL ── */
+.cta-band {
+  background: linear-gradient(135deg, var(--blush) 0%, var(--warm) 100%);
+  border-radius: 32px;
+  max-width: 1104px;
+  margin: 0 auto 100px;
+  padding: 80px 64px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-band::before {
+  content: '♡';
+  position: absolute;
+  font-size: 240px;
+  color: rgba(168,88,72,0.07);
+  top: -40px; right: -20px;
+  line-height: 1;
+  pointer-events: none;
+}
+.cta-band .section-title { margin-bottom: 16px; }
+.cta-band .section-desc { margin: 0 auto 36px; text-align: center; }
+.cta-actions { display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap; }
+
+.btn-whatsapp {
+  background: #25D366;
+  color: #fff;
+  padding: 15px 32px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s;
+  box-shadow: 0 8px 24px rgba(37,211,102,0.25);
+}
+.btn-whatsapp:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(37,211,102,0.3);
+}
+
+.btn-insta {
+  background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: #fff;
+  padding: 15px 32px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s;
+  box-shadow: 0 8px 24px rgba(220,39,67,0.25);
+}
+.btn-insta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(220,39,67,0.3);
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink);
+  color: rgba(255,255,255,0.5);
+  padding: 48px;
+  text-align: center;
+}
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.footer-logo em { font-style: italic; color: var(--rose); }
+.footer-tagline { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 28px; }
+.footer-links { display: flex; justify-content: center; gap: 32px; margin-bottom: 28px; }
+.footer-links a { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--rose); }
+.footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+
+/* ── SCROLL REVEALS ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; text-align: center; }
+  .hero-desc { margin: 0 auto 32px; }
+  .hero-actions { justify-content: center; }
+  .hero-right { display: none; }
+  section { padding: 60px 24px; }
+  .products-grid { grid-template-columns: 1fr 1fr; }
+  .steps-grid { grid-template-columns: 1fr 1fr; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; }
+  .how-section { padding: 48px 24px; border-radius: 20px; }
+  .cta-band { padding: 48px 24px; border-radius: 20px; }
+  .products-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
+</style>
 </head>
-<body class="min-h-screen">
+<body>
 
-  <!-- Navigation -->
-  <nav class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-border">
-    <div class="container mx-auto px-6 h-20 flex items-center justify-between">
-      <a href="#" class="font-serif text-2xl font-bold text-primary tracking-tight">GioDoces</a>
-      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
-        <a href="#cardapio" class="nav-link transition-colors">Cardápio</a>
-        <a href="#como-pedir" class="nav-link transition-colors">Como Pedir</a>
-        <a href="#contato" class="nav-link transition-colors">Contato</a>
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Com <span>Afeto</span><sup>ateliê</sup></a>
+  <ul class="nav-links">
+    <li><a href="#produtos">Produtos</a></li>
+    <li><a href="#como-funciona">Como funciona</a></li>
+    <li><a href="#depoimentos">Depoimentos</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#contato" class="nav-cta">Fazer pedido</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg-circle c1"></div>
+  <div class="hero-bg-circle c2"></div>
+
+  <div class="hero-left">
+    <div class="hero-tag">Ateliê de personalizados</div>
+    <h1 class="hero-title">
+      Presentes feitos
+      <em>com afeto.</em>
+    </h1>
+    <p class="hero-desc">
+      Transformamos suas fotos e memórias em ímãs, broches, chaveiros e adesivos únicos — feitos à mão, com muito carinho.
+    </p>
+    <div class="hero-actions">
+      <a href="#produtos" class="btn-primary">Ver produtos</a>
+      <a href="#como-funciona" class="btn-ghost">Como funciona</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="product-showcase">
+      <div class="float-card fc1">
+        <div class="fc-icon">⭐</div>
+        <div class="fc-text">
+          <strong>+200 pedidos</strong>
+          <span>entregues com amor</span>
+        </div>
       </div>
-      <a href="https://www.ifood.com.br" target="_blank" rel="noreferrer" class="btn btn-primary px-6 h-10 text-sm">
-        <svg class="icon mr-2" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        Pedir Agora
+      <div class="showcase-main">
+        <span class="showcase-emoji">🧲</span>
+        <div class="showcase-title">Ímã com sua foto</div>
+        <div class="showcase-sub">38mm · acabamento especial</div>
+        <div class="showcase-price">A partir de R$10</div>
+      </div>
+      <div class="float-card fc2">
+        <div class="fc-icon">💌</div>
+        <div class="fc-text">
+          <strong>Entrega rápida</strong>
+          <span>em todo o Brasil</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>Feito com carinho</span><span class="dot">✦</span>
+    <span>Memórias que ficam</span><span class="dot">✦</span>
+    <span>Presentes únicos</span><span class="dot">✦</span>
+    <span>Cada peça é especial</span><span class="dot">✦</span>
+    <span>Com Afeto Ateliê</span><span class="dot">✦</span>
+    <span>Feito com carinho</span><span class="dot">✦</span>
+    <span>Memórias que ficam</span><span class="dot">✦</span>
+    <span>Presentes únicos</span><span class="dot">✦</span>
+    <span>Cada peça é especial</span><span class="dot">✦</span>
+    <span>Com Afeto Ateliê</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- PRODUTOS -->
+<section id="produtos">
+  <div class="products-header">
+    <div>
+      <div class="section-eyebrow reveal">Nossa linha</div>
+      <h2 class="section-title reveal reveal-delay-1">Personalizados que<br><em>encantam de verdade</em></h2>
+    </div>
+    <a href="#contato" class="btn-ghost reveal">Ver todos</a>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card reveal">
+      <div class="product-img">🧲</div>
+      <div class="product-info">
+        <div class="product-name">Ímã com foto</div>
+        <div class="product-desc-s">38mm, acabamento brilhante. Vai direto na geladeira de quem você ama.</div>
+        <div class="product-bottom">
+          <div class="product-price">R$10–15</div>
+          <button class="product-btn" title="Pedir">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card reveal reveal-delay-1">
+      <div class="product-img">📌</div>
+      <div class="product-info">
+        <div class="product-name">Broche / Pin</div>
+        <div class="product-desc-s">Mesmo amor do ímã, agora no look. Para fãs, eventos e memórias.</div>
+        <div class="product-bottom">
+          <div class="product-price">R$8–12</div>
+          <button class="product-btn" title="Pedir">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card reveal reveal-delay-2">
+      <div class="product-img">🔑</div>
+      <div class="product-info">
+        <div class="product-name">Chaveiro acrílico</div>
+        <div class="product-desc-s">Foto impressa em acrílico transparente. Presente premium e duradouro.</div>
+        <div class="product-bottom">
+          <div class="product-price">R$25–40</div>
+          <button class="product-btn" title="Pedir">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card reveal reveal-delay-3">
+      <div class="product-img">🎨</div>
+      <div class="product-info">
+        <div class="product-name">Kit lembrança</div>
+        <div class="product-desc-s">3 ímãs + broche em caixinha kraft. O presentinho completo.</div>
+        <div class="product-bottom">
+          <div class="product-price">R$38–55</div>
+          <button class="product-btn" title="Pedir">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<div style="padding: 0 48px 100px; max-width:1200px; margin:0 auto;" id="como-funciona">
+  <div class="how-section reveal">
+    <div class="section-eyebrow">Simples assim</div>
+    <h2 class="section-title">Como <em>funciona?</em></h2>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">📸</div>
+        <div class="step-title">Escolha o produto</div>
+        <div class="step-desc">Ímã, broche, chaveiro ou kit. Você decide o que faz mais sentido.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">💌</div>
+        <div class="step-title">Mande a foto</div>
+        <div class="step-desc">Nos envie pelo WhatsApp ou Instagram. A gente cuida do resto com carinho.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">✨</div>
+        <div class="step-title">A gente produz</div>
+        <div class="step-desc">Cada peça é feita manualmente, com atenção a cada detalhe.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">📦</div>
+        <div class="step-title">Receba em casa</div>
+        <div class="step-desc">Embalado com carinho e enviado pra onde você estiver no Brasil.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DEPOIMENTOS -->
+<section id="depoimentos">
+  <div class="section-eyebrow reveal">Quem já amou</div>
+  <h2 class="section-title reveal reveal-delay-1">O que nossos clientes<br><em>estão dizendo</em></h2>
+
+  <div class="testimonials-grid">
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">Pedi um kit de ímãs com fotos da minha filha pra dar de presente pra avó dela. A vovó chorou de emoção! Qualidade incrível e chegou super rápido.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👩</div>
+        <div>
+          <div class="testi-name">Fernanda S.</div>
+          <div class="testi-when">São Paulo · há 2 semanas</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal reveal-delay-1">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">Comprei broches personalizados pra minha turma de formatura. Ficaram LINDOS. Todo mundo amou e queremos de novo pro encontro de um ano!</p>
+      <div class="testi-author">
+        <div class="testi-avatar">🧑</div>
+        <div>
+          <div class="testi-name">Rafael M.</div>
+          <div class="testi-when">Campinas · há 1 mês</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal reveal-delay-2">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">O chaveiro acrílico com foto do meu pet é a coisa mais fofa que tenho! Atendimento super atencioso, tiraram todas as minhas dúvidas. Super indico!</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👩‍🦰</div>
+        <div>
+          <div class="testi-name">Juliana T.</div>
+          <div class="testi-when">Rio de Janeiro · há 3 semanas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="about-grid">
+    <div class="about-visual reveal">
+      <div class="about-main-card">
+        <span class="big-emoji">🌸</span>
+        <div class="about-quote">"Cada peça carrega um pedacinho de afeto de quem a fez."</div>
+      </div>
+      <div class="about-stat-card s1">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">feito à mão</div>
+      </div>
+      <div class="about-stat-card s2">
+        <div class="stat-number">♡ 200+</div>
+        <div class="stat-label">clientes felizes</div>
+      </div>
+    </div>
+
+    <div class="reveal reveal-delay-1">
+      <div class="section-eyebrow">Nossa história</div>
+      <h2 class="section-title">Por que nos<br><em>chamamos assim?</em></h2>
+      <p class="section-desc" style="margin-bottom:32px;">
+        "Com Afeto" não é só um nome — é a forma como a gente produz cada peça. Acreditamos que um presente feito com cuidado vale mais do que qualquer coisa cara e genérica.
+      </p>
+      <div class="about-values">
+        <div class="value-item">
+          <div class="value-icon">🤝</div>
+          <div class="value-text">
+            <h4>Atendimento próximo</h4>
+            <p>Respondemos rápido e de forma pessoal. Você não fala com um robô aqui.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">✨</div>
+          <div class="value-text">
+            <h4>Qualidade em cada detalhe</h4>
+            <p>Do material à embalagem, tudo pensado pra encantar quem recebe.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">🌿</div>
+          <div class="value-text">
+            <h4>Produção com cuidado</h4>
+            <p>Cada pedido é único. Nada sai daqui sem ser revisado com carinho.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<div style="padding: 0 48px;" id="contato">
+  <div class="cta-band reveal">
+    <div class="section-eyebrow" style="justify-content:center">Pronta para encantar alguém?</div>
+    <h2 class="section-title">Manda a foto,<br><em>a gente faz a magia</em></h2>
+    <p class="section-desc">É só nos chamar pelo WhatsApp ou Instagram. Em poucos passos seu pedido estará a caminho.</p>
+    <div class="cta-actions">
+      <a href="https://wa.me/5511999999999" class="btn-whatsapp">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
       </a>
+      <a href="https://instagram.com/com_afeto.atelie" class="btn-insta">@ Instagram</a>
     </div>
-  </nav>
+  </div>
+</div>
 
-  <!-- Hero -->
-  <section class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
-    <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-      <div class="max-w-2xl relative z-10 space-y-8">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent text-accent-foreground text-sm font-medium">
-          <span class="w-2 h-2 rounded-full bg-primary pulse-dot"></span>
-          Artesanal e feito com amor
-        </div>
-        <h1 class="font-serif text-5xl md:text-7xl font-bold leading-[1.1] text-foreground">
-          A doçura que <br />
-          <span class="text-primary italic">abraça</span> a alma.
-        </h1>
-        <p class="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg">
-          Bolos de pote irresistíveis e brownies de dar água na boca. Receitas de família preparadas diariamente com ingredientes selecionados.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 pt-4">
-          <a href="https://www.ifood.com.br" target="_blank" rel="noreferrer" class="btn btn-primary text-lg h-14 px-8">Peça pelo iFood</a>
-          <a href="#contato" class="btn btn-outline text-lg h-14 px-8">Pedir pelo WhatsApp</a>
-        </div>
-      </div>
-      <div class="relative">
-        <div class="absolute inset-0 bg-secondary/20 rounded-[2rem] transform rotate-3 scale-105 -z-10"></div>
-        <img src="images/hero.png" alt="Bolos de pote e brownies deliciosos" class="rounded-[2rem] shadow-2xl object-cover aspect-[4/3] w-full" />
-      </div>
-    </div>
-  </section>
+<!-- FOOTER -->
+<footer style="margin-top:80px;">
+  <div class="footer-logo">Com <em>Afeto</em></div>
+  <div class="footer-tagline">Ateliê de personalizados · @com_afeto.atelie</div>
+  <div class="footer-links">
+    <a href="#produtos">Produtos</a>
+    <a href="#como-funciona">Como funciona</a>
+    <a href="#depoimentos">Depoimentos</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#contato">Contato</a>
+  </div>
+  <div class="footer-copy">© 2025 Com Afeto Ateliê · Feito com muito carinho 🌸</div>
+</footer>
 
-  <!-- Cardápio -->
-  <section id="cardapio" class="py-24 bg-white/50">
-    <div class="container mx-auto px-6">
-      <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
-        <h2 class="font-serif text-4xl md:text-5xl font-bold text-foreground">Nosso Cardápio</h2>
-        <p class="text-muted-foreground text-lg">Escolha seu favorito e deixe o dia mais doce.</p>
-      </div>
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
 
-      <div class="space-y-20" id="menu-categories"></div>
-    </div>
-  </section>
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top  = my + 'px';
+});
 
-  <!-- Como Pedir -->
-  <section id="como-pedir" class="py-24 bg-primary text-primary-foreground">
-    <div class="container mx-auto px-6">
-      <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
-        <h2 class="font-serif text-4xl font-bold">Como fazer seu pedido</h2>
-        <p class="text-primary-foreground/80 text-lg">Processo simples e rápido para sua sobremesa chegar fresquinha.</p>
-      </div>
-      <div class="grid md:grid-cols-3 gap-12 max-w-4xl mx-auto">
-        <div class="text-center space-y-4 relative">
-          <div class="text-6xl font-serif font-bold text-primary-foreground/20 absolute -top-8 left-1/2 -translate-x-1/2">01</div>
-          <div class="relative z-10">
-            <h4 class="text-2xl font-bold mb-2">Escolha</h4>
-            <p class="text-primary-foreground/80 leading-relaxed">Navegue pelo nosso cardápio e escolha suas doçuras favoritas.</p>
-          </div>
-        </div>
-        <div class="text-center space-y-4 relative">
-          <div class="text-6xl font-serif font-bold text-primary-foreground/20 absolute -top-8 left-1/2 -translate-x-1/2">02</div>
-          <div class="relative z-10">
-            <h4 class="text-2xl font-bold mb-2">Peça</h4>
-            <p class="text-primary-foreground/80 leading-relaxed">Faça o pedido diretamente pelo iFood ou via WhatsApp.</p>
-          </div>
-        </div>
-        <div class="text-center space-y-4 relative">
-          <div class="text-6xl font-serif font-bold text-primary-foreground/20 absolute -top-8 left-1/2 -translate-x-1/2">03</div>
-          <div class="relative z-10">
-            <h4 class="text-2xl font-bold mb-2">Aproveite</h4>
-            <p class="text-primary-foreground/80 leading-relaxed">Receba no conforto de casa embalado com todo cuidado e amor.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+(function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top  = ry + 'px';
+  requestAnimationFrame(animRing);
+})();
 
-  <!-- Footer / Contato -->
-  <footer id="contato" class="bg-foreground text-background pt-24 pb-12" style="color:#fbf6ef">
-    <div class="container mx-auto px-6">
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-        <div class="lg:col-span-2 space-y-6">
-          <div class="font-serif text-3xl font-bold text-primary">GioDoces</div>
-          <p class="opacity-60 max-w-sm leading-relaxed">
-            Levando alegria em forma de doce para a sua casa. Produção artesanal com os melhores ingredientes.
-          </p>
-          <a href="https://www.ifood.com.br" target="_blank" rel="noreferrer" class="btn btn-primary px-6 h-12 text-base">
-            <svg class="icon mr-2" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-            Peça agora pelo iFood
-          </a>
-        </div>
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(2.5)';
+    cursor.style.background = 'var(--berry)';
+    ring.style.opacity = '0';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+    cursor.style.background = 'var(--rose)';
+    ring.style.opacity = '0.6';
+  });
+});
 
-        <div class="space-y-6">
-          <h4 class="text-lg font-bold">Contato</h4>
-          <ul class="space-y-4 opacity-80">
-            <li class="flex items-start gap-3">
-              <svg class="icon text-primary shrink-0 mt-1" style="width:20px;height:20px" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
-              <div>
-                <p class="font-medium">Telefone / WhatsApp</p>
-                <p>(35) 99999-1234</p>
-              </div>
-            </li>
-            <li class="flex items-start gap-3">
-              <svg class="icon text-primary shrink-0 mt-1" style="width:20px;height:20px" viewBox="0 0 24 24"><path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-              <div>
-                <p class="font-medium">Localização</p>
-                <p>Pouso Alegre, MG</p>
-              </div>
-            </li>
-          </ul>
-        </div>
+// Scroll reveals
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.12 });
+reveals.forEach(r => io.observe(r));
 
-        <div class="space-y-6">
-          <h4 class="text-lg font-bold">Horários</h4>
-          <ul class="space-y-4 opacity-80">
-            <li class="flex items-start gap-3">
-              <svg class="icon text-primary shrink-0 mt-1" style="width:20px;height:20px" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-              <div>
-                <p class="font-medium">Terça a Domingo</p>
-                <p>13:00 às 22:00</p>
-              </div>
-            </li>
-          </ul>
-          <div class="pt-4">
-            <a href="https://instagram.com/giodoces" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 text-primary hover:opacity-80 transition-colors">
-              <svg class="icon" style="width:20px;height:20px" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37Z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-              <span>@giodoces</span>
-            </a>
-          </div>
-        </div>
-      </div>
+// Nav shrink
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
 
-      <div class="pt-8 border-t border-white/10 text-center opacity-40 text-sm">
-        <p>&copy; <span id="year"></span> GioDoces. Todos os direitos reservados.</p>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    const MENU = {
-      "Bolos de Pote": [
-        { name: "Brigadeiro Gourmet", desc: "Massa de cacau 50%, recheio cremoso de brigadeiro ao leite e granulado belga.", price: "R$ 18,00", image: "images/bolo1.png" },
-        { name: "Morango com Ninho", desc: "Massa branca fofinha, creme de leite Ninho original e geleia de morango artesanal.", price: "R$ 20,00", image: "images/bolo2.png" },
-        { name: "Churros", desc: "Massa com toque de canela, recheio farto de doce de leite cozido e açúcar com canela.", price: "R$ 19,00", image: "images/bolo3.png" },
-        { name: "Prestígio", desc: "Massa de chocolate umedecida, recheio de beijinho cremoso e cobertura de ganache.", price: "R$ 18,00", image: "images/bolo1.png" },
-      ],
-      "Brownies Tradicionais": [
-        { name: "Brownie Tradicional", desc: "Nossa receita clássica. Casquinha crocante por fora e muito cremoso por dentro.", price: "R$ 12,00", image: "images/brownie1.png" },
-        { name: "Brownie com Nozes", desc: "O tradicional elevado com pedaços generosos de nozes selecionadas.", price: "R$ 14,00", image: "images/brownie1.png" },
-      ],
-      "Brownies Recheados": [
-        { name: "Recheado com Nutella", desc: "Nosso brownie clássico com um coração cremoso de Nutella pura.", price: "R$ 18,00", image: "images/brownie2.png" },
-        { name: "Recheado com Ninho", desc: "Equilíbrio perfeito entre o amargo do cacau e o doce do brigadeiro de Ninho.", price: "R$ 16,00", image: "images/brownie2.png" },
-        { name: "Recheado Doce de Leite", desc: "Recheio generoso do nosso doce de leite artesanal cozido lentamente.", price: "R$ 16,00", image: "images/brownie2.png" },
-      ],
-    };
-
-    const arrowSvg = '<svg class="icon arrow ml-2" style="width:16px;height:16px" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
-
-    const root = document.getElementById('menu-categories');
-    Object.entries(MENU).forEach(([cat, items]) => {
-      const section = document.createElement('div');
-      section.innerHTML = `
-        <div class="flex items-center gap-4 mb-10">
-          <h3 class="font-serif text-3xl font-semibold text-foreground">${cat}</h3>
-          <div class="h-px bg-border flex-1"></div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          ${items.map(it => `
-            <div class="menu-card overflow-hidden bg-white/80 backdrop-blur-sm rounded-xl">
-              <div class="img-wrap relative aspect-square overflow-hidden rounded-t-xl bg-muted">
-                <img src="${it.image}" alt="${it.name}" class="object-cover w-full h-full" />
-              </div>
-              <div class="p-6">
-                <div class="flex justify-between items-start mb-2 gap-4">
-                  <h3 class="font-serif text-xl font-semibold leading-tight text-foreground">${it.name}</h3>
-                  <span class="font-medium text-primary whitespace-nowrap bg-primary/10 px-2 py-1 rounded-md text-sm">${it.price}</span>
-                </div>
-                <p class="text-muted-foreground text-sm leading-relaxed">${it.desc}</p>
-                <button class="add-btn btn btn-ghost w-full mt-4 h-10 text-sm">Adicionar ao pedido ${arrowSvg}</button>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      `;
-      root.appendChild(section);
-    });
-
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+// Product button
+document.querySelectorAll('.product-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.textContent = '✓';
+    btn.style.background = 'var(--sage)';
+    setTimeout(() => { btn.textContent = '+'; btn.style.background = ''; }, 1200);
+  });
+});
+</script>
 </body>
 </html>
+
